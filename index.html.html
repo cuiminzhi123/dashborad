@@ -1,0 +1,569 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{display:grid;grid-template-columns:196px 1fr 272px;height:760px;overflow:hidden;background:var(--color-background-tertiary);font-family:var(--font-sans)}
+.sidebar{background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow:hidden}
+.sb-logo{padding:14px 14px 10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sb-logo-t{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.sb-logo-s{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+.sb-user{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px}
+.av{width:28px;height:28px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#185FA5;flex-shrink:0}
+.sb-nav{flex:1;overflow-y:auto;padding:6px 0}
+.nav-sec{padding:8px 14px 3px;font-size:9px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.06em}
+.nav-item{display:flex;align-items:center;gap:7px;padding:7px 14px;cursor:pointer;font-size:12px;color:var(--color-text-secondary);border-left:2px solid transparent;transition:all .12s;user-select:none}
+.nav-item:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-item.active{background:#E6F1FB;color:#185FA5;border-left-color:#185FA5;font-weight:500}
+.nav-item i{font-size:14px}
+.nbadge{margin-left:auto;background:#E24B4A;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px}
+.sb-foot{padding:10px 14px;border-top:0.5px solid var(--color-border-tertiary);font-size:10px;color:var(--color-text-secondary)}
+.main{overflow-y:auto;display:flex;flex-direction:column;min-width:0}
+.topbar{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:9px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.tb-title{font-size:13px;font-weight:500;color:var(--color-text-primary);flex:1}
+.tb-date{font-size:10px;color:var(--color-text-secondary)}
+.tbtn{padding:5px 9px;font-size:11px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-primary);display:flex;align-items:center;gap:3px}
+.tbtn:hover{background:var(--color-background-secondary)}
+.tbtn.pri{background:#185FA5;color:#fff;border-color:#185FA5}
+.tbtn.pri:hover{background:#0C447C}
+.pg{display:none;padding:14px 16px;flex:1}
+.pg.show{display:block}
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px}
+.kcard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px 13px}
+.klbl{font-size:9px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;display:flex;align-items:center;gap:3px}
+.kval{font-size:21px;font-weight:500;color:var(--color-text-primary);line-height:1}
+.ksub{font-size:9px;color:var(--color-text-secondary);margin-top:3px}
+.up{color:#1D9E75}.dn{color:#E24B4A}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.ccard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px}
+.ctit{font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.csub{font-size:9px;color:var(--color-text-secondary);margin-bottom:8px}
+.cwrap{position:relative;width:100%;height:130px}
+.bgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.bcard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px}
+.bctit{font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.mrow{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.mbar{height:4px;border-radius:2px;background:var(--color-background-secondary);flex:1;overflow:hidden}
+.mfill{height:100%;border-radius:2px}
+.mpct{font-size:9px;color:var(--color-text-secondary);min-width:24px;text-align:right}
+.pitem{display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pitem:last-child{border-bottom:none}
+.pbadge{font-size:9px;padding:2px 5px;border-radius:3px;font-weight:500;flex-shrink:0}
+.bu{background:#FCEBEB;color:#791F1F}.bi{background:#FAEEDA;color:#633806}.bn{background:#E6F1FB;color:#0C447C}
+.ptxt{font-size:10px;color:var(--color-text-primary);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdue{font-size:9px;color:var(--color-text-secondary)}
+.memo{padding:7px 9px;border-radius:6px;margin-bottom:5px;font-size:10px;line-height:1.5}
+.my{background:#FAEEDA;color:#633806}.mg{background:#EAF3DE;color:#27500A}.mb{background:#E6F1FB;color:#0C447C}.mp{background:#FBEAF0;color:#72243E}
+.aibar{background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:9px 12px;margin-bottom:12px;font-size:11px;color:#042C53;line-height:1.5}
+.rpanel{background:var(--color-background-primary);border-left:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow:hidden}
+.rtabs{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0}
+.rtab{flex:1;padding:9px 4px;font-size:10px;text-align:center;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent}
+.rtab.active{color:#185FA5;border-bottom-color:#185FA5;font-weight:500}
+.rcontent{flex:1;overflow-y:auto;padding:10px}
+.cmsg{display:flex;gap:7px;margin-bottom:10px}
+.cav{width:24px;height:24px;border-radius:50%;font-size:9px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cbub{background:var(--color-background-secondary);border-radius:0 7px 7px 7px;padding:6px 9px;font-size:10px;color:var(--color-text-primary);line-height:1.5;max-width:160px}
+.cbub.mine{background:#E6F1FB;color:#042C53;border-radius:7px 0 7px 7px}
+.ctime{font-size:9px;color:var(--color-text-tertiary);margin-top:2px}
+.cinput-w{padding:8px;border-top:0.5px solid var(--color-border-tertiary);display:flex;gap:5px;flex-shrink:0}
+.cinput{flex:1;padding:5px 9px;font-size:10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none}
+.titem{padding:8px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:6px;cursor:pointer}
+.titem:hover{background:var(--color-background-secondary)}
+.ttop{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+.ttit{font-size:10px;font-weight:500;color:var(--color-text-primary);flex:1}
+.tstat{font-size:9px;padding:2px 5px;border-radius:3px}
+.sd{background:#EAF3DE;color:#27500A}.sp{background:#E6F1FB;color:#0C447C}.sw{background:#F1EFE8;color:#444441}.sl{background:#FCEBEB;color:#791F1F}
+.tmeta{font-size:9px;color:var(--color-text-secondary);display:flex;gap:7px}
+.onrow{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.onrow:last-child{border-bottom:none}
+.ondot{width:7px;height:7px;border-radius:50%}
+.onn{font-size:10px;color:var(--color-text-primary);flex:1}
+.ons{font-size:9px;color:var(--color-text-secondary)}
+.page-kanban .col-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 16px}
+.kcol{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:10px}
+.kcol-h{font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.kcnt{font-size:9px;padding:1px 6px;border-radius:8px;font-weight:400}
+.ktask{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px;margin-bottom:6px;cursor:grab;font-size:10px;color:var(--color-text-primary);line-height:1.5}
+.ktask:hover{border-color:var(--color-border-secondary)}
+.ktag{font-size:8px;padding:1px 5px;border-radius:3px;margin-right:3px}
+.kb{background:#E6F1FB;color:#0C447C}.kg{background:#EAF3DE;color:#27500A}.kr{background:#FCEBEB;color:#791F1F}.ky{background:#FAEEDA;color:#633806}
+.section-h{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.big-chart{position:relative;width:100%;height:180px}
+.team-table{width:100%;border-collapse:collapse;font-size:11px}
+.team-table th{text-align:left;padding:6px 8px;font-size:9px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;border-bottom:0.5px solid var(--color-border-tertiary);font-weight:400}
+.team-table td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
+.team-table tr:last-child td{border-bottom:none}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.cal-head{font-size:9px;color:var(--color-text-secondary);text-align:center;padding:3px 0}
+.cal-day{font-size:10px;color:var(--color-text-primary);text-align:center;padding:5px 3px;border-radius:var(--border-radius-md);cursor:pointer;min-height:34px}
+.cal-day:hover{background:var(--color-background-secondary)}
+.cal-day.today{background:#185FA5;color:#fff;font-weight:500}
+.cal-day.has-event{position:relative}
+.cal-day.has-event::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#E24B4A}
+.cal-day.other{color:var(--color-text-tertiary)}
+.event-list{margin-top:10px}
+.evt{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.evt:last-child{border-bottom:none}
+.evt-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.evt-title{font-size:11px;color:var(--color-text-primary);flex:1}
+.evt-time{font-size:10px;color:var(--color-text-secondary)}
+.email-form{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+.frow{margin-bottom:12px}
+.flbl{font-size:10px;color:var(--color-text-secondary);margin-bottom:4px}
+.finput{width:100%;padding:7px 10px;font-size:11px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none}
+.finput:focus{border-color:#185FA5}
+.ftarea{resize:vertical;min-height:100px}
+.kpi-detail{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:12px}
+.member-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;display:flex;align-items:center;gap:10px}
+.member-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+</style>
+
+<h2 class="sr-only">AI 업무 관리 대시보드 — 전체 페이지 네비게이션 포함</h2>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-t"><i class="ti ti-layout-dashboard" style="color:#185FA5;margin-right:4px"></i>WorkAI</div>
+      <div class="sb-logo-s">업무 관리 & 협업 플랫폼</div>
+    </div>
+    <div class="sb-user">
+      <div class="av">KJ</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:11px;font-weight:500;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">김지훈 팀장</div>
+        <div style="font-size:9px;color:#185FA5"><i class="ti ti-shield-check" style="font-size:9px"></i> 관리자</div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-sec">메인</div>
+      <div class="nav-item active" onclick="goTo('dashboard',this)"><i class="ti ti-layout-dashboard"></i>대시보드</div>
+      <div class="nav-item" onclick="goTo('tasks',this)"><i class="ti ti-checklist"></i>업무 목록 <span class="nbadge">5</span></div>
+      <div class="nav-item" onclick="goTo('kanban',this)"><i class="ti ti-layout-kanban"></i>칸반 보드</div>
+      <div class="nav-item" onclick="goTo('calendar',this)"><i class="ti ti-calendar"></i>일정 관리</div>
+      <div class="nav-sec">분석</div>
+      <div class="nav-item" onclick="goTo('analytics',this)"><i class="ti ti-chart-bar"></i>성과 분석</div>
+      <div class="nav-item" onclick="goTo('kpi',this)"><i class="ti ti-trending-up"></i>KPI 현황</div>
+      <div class="nav-sec">팀</div>
+      <div class="nav-item" onclick="goTo('members',this)"><i class="ti ti-users"></i>팀원 관리</div>
+      <div class="nav-item" onclick="goTo('chat',this)"><i class="ti ti-message-dots"></i>채팅 <span class="nbadge">3</span></div>
+      <div class="nav-item" onclick="goTo('memo',this)"><i class="ti ti-notes"></i>포스트잇</div>
+      <div class="nav-sec">관리</div>
+      <div class="nav-item" onclick="goTo('email',this)"><i class="ti ti-mail"></i>이메일 발송</div>
+      <div class="nav-item" onclick="goTo('settings',this)"><i class="ti ti-settings"></i>설정</div>
+    </nav>
+    <div class="sb-foot"><span style="width:7px;height:7px;border-radius:50%;background:#1D9E75;display:inline-block;margin-right:4px"></span>서버 연결됨</div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="topbar">
+      <div class="tb-title" id="pageTitle">메인 대시보드</div>
+      <div class="tb-date"><i class="ti ti-calendar" style="font-size:11px;margin-right:2px"></i>2025. 5. 26.</div>
+      <button class="tbtn" onclick="refreshPage()"><i class="ti ti-refresh" style="font-size:11px"></i>새로고침</button>
+      <button class="tbtn pri" onclick="addTask()"><i class="ti ti-plus" style="font-size:11px"></i>업무 추가</button>
+    </div>
+
+    <div id="pg-dashboard" class="pg show">
+      <div class="aibar"><i class="ti ti-robot" style="color:#185FA5;margin-right:4px"></i><strong>AI 분석:</strong> 이번 주 업무 완료율 지난주 대비 <strong>14% 증가</strong>. 마케팅 팀 지연 3건 집중 발생 — 우선순위 재배분 권장.</div>
+      <div class="kgrid">
+        <div class="kcard"><div class="klbl"><i class="ti ti-circle-check" style="color:#1D9E75"></i>오늘 완료율</div><div class="kval">73<span style="font-size:13px">%</span></div><div class="ksub up">▲ 8% 어제 대비</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-briefcase" style="color:#185FA5"></i>진행중 업무</div><div class="kval">24</div><div class="ksub dn">▼ 3건 지연 포함</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-target" style="color:#BA7517"></i>월간 KPI</div><div class="kval">88<span style="font-size:13px">%</span></div><div class="ksub up">▲ 5% 전월 대비</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-users" style="color:#0F6E56"></i>활성 팀원</div><div class="kval">12</div><div class="ksub" style="color:#1D9E75">온라인 8명</div></div>
+      </div>
+      <div class="cgrid">
+        <div class="ccard"><div class="ctit">주간 업무 분석</div><div class="csub">완료 · 진행중 · 지연</div><div class="cwrap"><canvas id="c1" role="img" aria-label="주간 업무 분석">주간 데이터</canvas></div></div>
+        <div class="ccard"><div class="ctit">월간 KPI 추이</div><div class="csub">목표 달성률 1~5월</div><div class="cwrap"><canvas id="c2" role="img" aria-label="월간 KPI">월별 KPI</canvas></div></div>
+      </div>
+      <div class="bgrid">
+        <div class="bcard"><div class="bctit"><i class="ti ti-users" style="color:#185FA5;font-size:13px"></i>팀 업무 현황</div><div id="teamRows"></div></div>
+        <div class="bcard"><div class="bctit"><i class="ti ti-alert-triangle" style="color:#BA7517;font-size:13px"></i>업무 우선순위</div>
+          <div class="pitem"><span class="pbadge bu">긴급</span><span class="ptxt">클라이언트 보고서 수정</span><span class="pdue">오늘</span></div>
+          <div class="pitem"><span class="pbadge bu">긴급</span><span class="ptxt">서버 배포 승인</span><span class="pdue">내일</span></div>
+          <div class="pitem"><span class="pbadge bi">중요</span><span class="ptxt">Q2 마케팅 전략 검토</span><span class="pdue">5/28</span></div>
+          <div class="pitem"><span class="pbadge bi">중요</span><span class="ptxt">신규 팀원 온보딩</span><span class="pdue">5/29</span></div>
+          <div class="pitem"><span class="pbadge bn">일반</span><span class="ptxt">주간 회의록 정리</span><span class="pdue">5/30</span></div>
+        </div>
+        <div class="bcard"><div class="bctit"><i class="ti ti-notes" style="color:#0F6E56;font-size:13px"></i>메모 / 포스트잇</div>
+          <div class="memo my">클라이언트 미팅 오후 3시 — 발표자료 최종 확인 필수.</div>
+          <div class="memo mg">Sprint 23 완료. 다음 주 Sprint 24 킥오프 준비.</div>
+          <div class="memo mb">AI 자동화 파이프라인 제안 — 팀장 검토 요청.</div>
+          <div class="memo mp">마케팅 지연 3건 — 담당자 확인 필요.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pg-tasks" class="pg" style="padding:14px 16px">
+      <div class="section-h">업무 목록 — 전체 30건</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px">
+        <select id="taskFilter" onchange="filterTasks()" style="font-size:11px;padding:5px 8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)">
+          <option value="all">전체 상태</option><option value="진행중">진행중</option><option value="완료">완료</option><option value="대기">대기</option><option value="지연">지연</option>
+        </select>
+        <select id="priorFilter" onchange="filterTasks()" style="font-size:11px;padding:5px 8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)">
+          <option value="all">전체 우선순위</option><option value="긴급">긴급</option><option value="중요">중요</option><option value="일반">일반</option>
+        </select>
+      </div>
+      <div id="taskList"></div>
+    </div>
+
+    <div id="pg-kanban" class="pg" style="padding:0">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 16px;height:calc(100% - 0px)">
+        <div class="kcol">
+          <div class="kcol-h">대기 <span class="kcnt" style="background:#F1EFE8;color:#444441">4</span></div>
+          <div class="ktask"><span class="ktag ky">중요</span>신규 팀원 온보딩<br><span style="font-size:9px;color:var(--color-text-secondary)">김지훈 · 5/29</span></div>
+          <div class="ktask"><span class="ktag kb">일반</span>비용 청구서 제출<br><span style="font-size:9px;color:var(--color-text-secondary)">정유진 · 5/31</span></div>
+          <div class="ktask"><span class="ktag kb">일반</span>서버 배포 승인<br><span style="font-size:9px;color:var(--color-text-secondary)">박현수 · 내일</span></div>
+          <div class="ktask"><span class="ktag ky">중요</span>디자인 시안 검토<br><span style="font-size:9px;color:var(--color-text-secondary)">한도훈 · 6/2</span></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-h">진행중 <span class="kcnt" style="background:#E6F1FB;color:#0C447C">6</span></div>
+          <div class="ktask"><span class="ktag kr">긴급</span>클라이언트 보고서 수정<br><span style="font-size:9px;color:var(--color-text-secondary)">이민준 · 오늘</span></div>
+          <div class="ktask"><span class="ktag ky">중요</span>Q2 마케팅 전략 검토<br><span style="font-size:9px;color:var(--color-text-secondary)">최서연 · 5/28</span></div>
+          <div class="ktask"><span class="ktag kb">일반</span>API 연동 테스트<br><span style="font-size:9px;color:var(--color-text-secondary)">박현수 · 5/27</span></div>
+          <div class="ktask"><span class="ktag kb">일반</span>대시보드 UI 개선<br><span style="font-size:9px;color:var(--color-text-secondary)">한도훈 · 5/28</span></div>
+          <div class="ktask"><span class="ktag ky">중요</span>월간 보고서 작성<br><span style="font-size:9px;color:var(--color-text-secondary)">정유진 · 5/30</span></div>
+          <div class="ktask"><span class="ktag kr">긴급</span>버그 수정 #423<br><span style="font-size:9px;color:var(--color-text-secondary)">이민준 · 오늘</span></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-h">완료 <span class="kcnt" style="background:#EAF3DE;color:#27500A">8</span></div>
+          <div class="ktask"><span class="ktag kg">완료</span>주간 회의록 정리<br><span style="font-size:9px;color:var(--color-text-secondary)">정유진 · 5/23</span></div>
+          <div class="ktask"><span class="ktag kg">완료</span>UI 디자인 검토<br><span style="font-size:9px;color:var(--color-text-secondary)">한도훈 · 5/22</span></div>
+          <div class="ktask"><span class="ktag kg">완료</span>DB 마이그레이션<br><span style="font-size:9px;color:var(--color-text-secondary)">이민준 · 5/21</span></div>
+          <div class="ktask"><span class="ktag kg">완료</span>Sprint 23 리뷰<br><span style="font-size:9px;color:var(--color-text-secondary)">전팀 · 5/20</span></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-h">지연 <span class="kcnt" style="background:#FCEBEB;color:#791F1F">3</span></div>
+          <div class="ktask"><span class="ktag kr">지연</span>마케팅 캠페인 기획<br><span style="font-size:9px;color:#A32D2D">최서연 · 5/24 초과</span></div>
+          <div class="ktask"><span class="ktag kr">지연</span>파트너사 계약서 검토<br><span style="font-size:9px;color:#A32D2D">김지훈 · 5/22 초과</span></div>
+          <div class="ktask"><span class="ktag kr">지연</span>성과 발표 자료 준비<br><span style="font-size:9px;color:#A32D2D">오태현 · 5/23 초과</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pg-calendar" class="pg">
+      <div class="section-h">일정 관리 — 2025년 5월</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div>
+          <div class="cal-grid" id="calHead"></div>
+          <div class="cal-grid" id="calDays"></div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px">5월 일정</div>
+          <div class="event-list">
+            <div class="evt"><div class="evt-dot" style="background:#E24B4A"></div><div class="evt-title">클라이언트 미팅</div><div class="evt-time">5/26 15:00</div></div>
+            <div class="evt"><div class="evt-dot" style="background:#185FA5"></div><div class="evt-title">서버 배포</div><div class="evt-time">5/26 16:00</div></div>
+            <div class="evt"><div class="evt-dot" style="background:#EF9F27"></div><div class="evt-title">Q2 전략 회의</div><div class="evt-time">5/27 10:00</div></div>
+            <div class="evt"><div class="evt-dot" style="background:#1D9E75"></div><div class="evt-title">팀장 보고</div><div class="evt-time">5/28 14:00</div></div>
+            <div class="evt"><div class="evt-dot" style="background:#185FA5"></div><div class="evt-title">신규 팀원 온보딩</div><div class="evt-time">5/29 09:00</div></div>
+            <div class="evt"><div class="evt-dot" style="background:#EF9F27"></div><div class="evt-title">Sprint 24 킥오프</div><div class="evt-time">5/30 10:00</div></div>
+            <div class="evt"><div class="evt-dot" style="background:#E24B4A"></div><div class="evt-title">월간 마감 보고</div><div class="evt-time">5/31 17:00</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pg-analytics" class="pg">
+      <div class="section-h">성과 분석</div>
+      <div class="aibar"><i class="ti ti-sparkles" style="color:#185FA5;margin-right:4px"></i><strong>AI 요약:</strong> 5월 생산성 지수 <strong>88점</strong>으로 역대 최고. 개발팀 완료율 92%, 마케팅팀 54%로 편차 큼. 6월 목표 달성을 위해 마케팅 리소스 재배분 권장.</div>
+      <div class="analytics-grid">
+        <div class="ccard"><div class="ctit">연간 월별 성과</div><div class="csub">완료율 % 추이</div><div class="big-chart"><canvas id="c3" role="img" aria-label="연간 월별 성과">연간 데이터</canvas></div></div>
+        <div class="ccard"><div class="ctit">분기 성과 비교</div><div class="csub">Q1 ~ Q4</div><div class="big-chart"><canvas id="c4" role="img" aria-label="분기 성과">분기 데이터</canvas></div></div>
+      </div>
+      <div class="ccard" style="margin-bottom:10px"><div class="ctit">팀별 업무 현황</div><div class="csub" style="margin-bottom:10px">팀원 완료율 비교</div>
+        <table class="team-table">
+          <thead><tr><th>팀원</th><th>완료</th><th>진행중</th><th>지연</th><th>완료율</th></tr></thead>
+          <tbody>
+            <tr><td>이민준</td><td>18</td><td>4</td><td>0</td><td><span style="color:#1D9E75;font-weight:500">92%</span></td></tr>
+            <tr><td>정유진</td><td>15</td><td>3</td><td>0</td><td><span style="color:#1D9E75;font-weight:500">88%</span></td></tr>
+            <tr><td>박현수</td><td>12</td><td>4</td><td>1</td><td><span style="color:#185FA5;font-weight:500">78%</span></td></tr>
+            <tr><td>한도훈</td><td>11</td><td>3</td><td>1</td><td><span style="color:#185FA5;font-weight:500">71%</span></td></tr>
+            <tr><td>최서연</td><td>8</td><td>5</td><td>3</td><td><span style="color:#E24B4A;font-weight:500">54%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="pg-kpi" class="pg">
+      <div class="section-h">KPI 현황 — 2025년 5월</div>
+      <div class="kpi-detail">
+        <div class="kcard"><div class="klbl"><i class="ti ti-target" style="color:#185FA5"></i>전체 완료율</div><div class="kval">73%</div><div class="ksub up">▲ 8% 이번 달</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-trending-up" style="color:#1D9E75"></i>월간 KPI 달성</div><div class="kval">88%</div><div class="ksub up">▲ 5% 전월</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-clock" style="color:#BA7517"></i>평균 처리 시간</div><div class="kval">2.4<span style="font-size:13px">일</span></div><div class="ksub up">▲ 0.3일 단축</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-alert-circle" style="color:#E24B4A"></i>지연 업무</div><div class="kval">3<span style="font-size:13px">건</span></div><div class="ksub dn">▼ 2건 감소</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-star" style="color:#EF9F27"></i>고객 만족도</div><div class="kval">4.7<span style="font-size:13px">/5</span></div><div class="ksub up">▲ 0.2 상승</div></div>
+        <div class="kcard"><div class="klbl"><i class="ti ti-users" style="color:#0F6E56"></i>팀 생산성</div><div class="kval">91%</div><div class="ksub up">▲ 역대 최고</div></div>
+      </div>
+      <div class="ccard"><div class="ctit">KPI 달성 추이 (1~5월)</div><div class="csub" style="margin-bottom:10px">목표선 vs 실제</div><div style="position:relative;width:100%;height:160px"><canvas id="c5" role="img" aria-label="KPI 추이">KPI 데이터</canvas></div></div>
+    </div>
+
+    <div id="pg-members" class="pg">
+      <div class="section-h">팀원 관리 — 12명</div>
+      <div class="member-grid" id="memberGrid"></div>
+    </div>
+
+    <div id="pg-chat" class="pg" style="padding:0;height:100%;display:flex;flex-direction:column">
+      <div style="padding:10px 16px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-secondary);flex-shrink:0"># 전체팀 채널 · 8명 온라인</div>
+      <div id="chatFull" style="flex:1;overflow-y:auto;padding:14px 16px"></div>
+      <div style="padding:10px 16px;border-top:0.5px solid var(--color-border-tertiary);display:flex;gap:8px;flex-shrink:0">
+        <input class="cinput" style="font-size:12px;padding:7px 11px" placeholder="메시지를 입력하세요..." id="chatFullInput" />
+        <button class="tbtn pri" onclick="sendFullChat()"><i class="ti ti-send" style="font-size:12px"></i></button>
+      </div>
+    </div>
+
+    <div id="pg-memo" class="pg">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="section-h" style="margin:0;border:none;padding:0">포스트잇 메모 — 8개</div>
+        <button class="tbtn pri" onclick="addMemo()"><i class="ti ti-plus" style="font-size:11px"></i>메모 추가</button>
+      </div>
+      <div id="memoGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px"></div>
+    </div>
+
+    <div id="pg-email" class="pg">
+      <div class="section-h">이메일 발송</div>
+      <div class="email-form">
+        <div class="frow"><div class="flbl">받는 사람</div><input class="finput" placeholder="이메일 주소 입력..." id="emailTo" /></div>
+        <div class="frow"><div class="flbl">참조</div><input class="finput" placeholder="참조 이메일 (선택)" /></div>
+        <div class="frow"><div class="flbl">제목</div><input class="finput" placeholder="이메일 제목 입력..." id="emailSubj" /></div>
+        <div class="frow"><div class="flbl">내용</div><textarea class="finput ftarea" placeholder="이메일 내용을 입력하세요..." id="emailBody"></textarea></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="tbtn" onclick="clearEmail()"><i class="ti ti-trash" style="font-size:11px"></i>초기화</button>
+          <button class="tbtn pri" onclick="sendEmail()"><i class="ti ti-send" style="font-size:11px"></i>발송</button>
+        </div>
+        <div id="emailMsg" style="font-size:11px;margin-top:8px;text-align:right"></div>
+      </div>
+    </div>
+
+    <div id="pg-settings" class="pg">
+      <div class="section-h">설정</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="bcard"><div class="bctit"><i class="ti ti-user" style="color:#185FA5;font-size:13px"></i>계정 설정</div>
+          <div class="frow"><div class="flbl" style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px">이름</div><input class="finput" value="김지훈" /></div>
+          <div class="frow" style="margin-top:8px"><div class="flbl" style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px">이메일</div><input class="finput" value="kjh@workAI.io" /></div>
+        </div>
+        <div class="bcard"><div class="bctit"><i class="ti ti-bell" style="color:#BA7517;font-size:13px"></i>알림 설정</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:11px">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked /> 업무 알림</label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked /> 채팅 알림</label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" /> 이메일 요약</label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked /> AI 분석 알림</label>
+          </div>
+        </div>
+        <div class="bcard"><div class="bctit"><i class="ti ti-palette" style="color:#0F6E56;font-size:13px"></i>화면 설정</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:8px">테마</div>
+          <div style="display:flex;gap:6px">
+            <button class="tbtn pri">라이트</button>
+            <button class="tbtn">다크</button>
+            <button class="tbtn">시스템</button>
+          </div>
+        </div>
+        <div class="bcard"><div class="bctit"><i class="ti ti-robot" style="color:#185FA5;font-size:13px"></i>AI 설정</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:11px">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked /> AI 자동 분석</label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked /> 업무 요약 생성</label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" /> 위험도 분석</label>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;text-align:right"><button class="tbtn pri" onclick="saveSettings()"><i class="ti ti-check" style="font-size:11px"></i>저장</button></div>
+      <div id="settingsMsg" style="font-size:11px;color:#1D9E75;text-align:right;margin-top:4px"></div>
+    </div>
+  </main>
+
+  <aside class="rpanel">
+    <div class="rtabs">
+      <div class="rtab active" onclick="rTab(this,'rchat')"><i class="ti ti-message-dots" style="font-size:12px"></i> 채팅</div>
+      <div class="rtab" onclick="rTab(this,'rtasks')"><i class="ti ti-checklist" style="font-size:12px"></i> 업무</div>
+      <div class="rtab" onclick="rTab(this,'ronline')"><i class="ti ti-users" style="font-size:12px"></i> 팀원</div>
+    </div>
+    <div id="rchat" class="rcontent">
+      <div style="font-size:9px;color:var(--color-text-tertiary);text-align:center;margin-bottom:8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)"># 전체팀 · 8명 온라인</div>
+      <div class="cmsg"><div class="cav" style="background:#E6F1FB;color:#185FA5">LM</div><div><div class="cbub">오늘 배포 일정 오후 4시 맞죠?</div><div class="ctime">09:14</div></div></div>
+      <div class="cmsg" style="flex-direction:row-reverse"><div class="cav" style="background:#EAF3DE;color:#0F6E56">KJ</div><div style="text-align:right"><div class="cbub mine">네, 4시 확정입니다.</div><div class="ctime">09:16</div></div></div>
+      <div class="cmsg"><div class="cav" style="background:#FBEAF0;color:#72243E">PH</div><div><div class="cbub">마케팅 보고서 초안 공유했어요.</div><div class="ctime">09:31</div></div></div>
+      <div class="cmsg"><div class="cav" style="background:#FAEEDA;color:#633806">CS</div><div><div class="cbub">Q2 KPI 재조정이 필요할 것 같습니다.</div><div class="ctime">09:45</div></div></div>
+      <div id="rChatMsgs"></div>
+    </div>
+    <div id="rtasks" class="rcontent" style="display:none">
+      <div class="titem"><div class="ttop"><span class="ttit">클라이언트 보고서 수정</span><span class="tstat sp">진행중</span></div><div class="tmeta"><span>이민준</span><span>오늘</span></div></div>
+      <div class="titem"><div class="ttop"><span class="ttit">서버 배포 승인</span><span class="tstat sw">대기</span></div><div class="tmeta"><span>박현수</span><span>내일</span></div></div>
+      <div class="titem"><div class="ttop"><span class="ttit">Q2 마케팅 전략</span><span class="tstat sl">지연</span></div><div class="tmeta"><span>최서연</span><span>5/24</span></div></div>
+      <div class="titem"><div class="ttop"><span class="ttit">신규 팀원 온보딩</span><span class="tstat sw">대기</span></div><div class="tmeta"><span>김지훈</span><span>5/29</span></div></div>
+      <div class="titem"><div class="ttop"><span class="ttit">주간 회의록 정리</span><span class="tstat sd">완료</span></div><div class="tmeta"><span>정유진</span><span>5/23</span></div></div>
+    </div>
+    <div id="ronline" class="rcontent" style="display:none">
+      <div style="font-size:9px;color:var(--color-text-secondary);margin-bottom:7px">온라인 8 / 12명</div>
+      <div class="onrow"><div class="cav" style="background:#E6F1FB;color:#185FA5;width:22px;height:22px;font-size:9px">KJ</div><div class="ondot" style="background:#1D9E75"></div><span class="onn">김지훈 (팀장)</span><span class="ons">업무중</span></div>
+      <div class="onrow"><div class="cav" style="background:#EAF3DE;color:#0F6E56;width:22px;height:22px;font-size:9px">LM</div><div class="ondot" style="background:#1D9E75"></div><span class="onn">이민준</span><span class="ons">온라인</span></div>
+      <div class="onrow"><div class="cav" style="background:#FBEAF0;color:#72243E;width:22px;height:22px;font-size:9px">PH</div><div class="ondot" style="background:#EF9F27"></div><span class="onn">박현수</span><span class="ons">자리비움</span></div>
+      <div class="onrow"><div class="cav" style="background:#FAEEDA;color:#633806;width:22px;height:22px;font-size:9px">CS</div><div class="ondot" style="background:#1D9E75"></div><span class="onn">최서연</span><span class="ons">온라인</span></div>
+      <div class="onrow"><div class="cav" style="background:#E6F1FB;color:#0C447C;width:22px;height:22px;font-size:9px">JY</div><div class="ondot" style="background:#1D9E75"></div><span class="onn">정유진</span><span class="ons">온라인</span></div>
+      <div class="onrow"><div class="cav" style="background:#F1EFE8;color:#444441;width:22px;height:22px;font-size:9px">HD</div><div class="ondot" style="background:#EF9F27"></div><span class="onn">한도훈</span><span class="ons">자리비움</span></div>
+    </div>
+    <div class="cinput-w">
+      <input class="cinput" placeholder="메시지..." id="rChatIn" />
+      <button class="tbtn pri" onclick="sendRChat()" style="padding:5px 7px"><i class="ti ti-send" style="font-size:11px"></i></button>
+    </div>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const pages={dashboard:'메인 대시보드',tasks:'업무 목록',kanban:'칸반 보드',calendar:'일정 관리',analytics:'성과 분석',kpi:'KPI 현황',members:'팀원 관리',chat:'채팅',memo:'포스트잇',email:'이메일 발송',settings:'설정'};
+const chartReg={};
+function goTo(id,el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const pg=document.getElementById('pg-'+id);
+  if(pg) pg.classList.add('show');
+  if(el) el.classList.add('active');
+  document.getElementById('pageTitle').textContent=pages[id]||id;
+  if(id==='analytics') setTimeout(()=>{initAnalytics()},50);
+  if(id==='kpi') setTimeout(()=>{initKPI()},50);
+  if(id==='calendar') buildCal();
+  if(id==='members') buildMembers();
+  if(id==='memo') buildMemo();
+  if(id==='chat') buildFullChat();
+}
+function rTab(el,id){
+  document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['rchat','rtasks','ronline'].forEach(p=>{document.getElementById(p).style.display=p===id?'block':'none'});
+}
+function makeChart(id,type,labels,datasets,opts){
+  if(chartReg[id]){chartReg[id].destroy()}
+  const el=document.getElementById(id);
+  if(!el)return;
+  chartReg[id]=new Chart(el,{type,data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9}},grid:{display:false}},y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,0.04)'}},...(opts||{})}}});
+}
+function initDashboard(){
+  makeChart('c1','bar',['월','화','수','목','금'],[{label:'완료',data:[5,7,4,8,6],backgroundColor:'#378ADD'},{label:'진행중',data:[3,2,4,2,3],backgroundColor:'#1D9E75'},{label:'지연',data:[1,0,1,0,1],backgroundColor:'#E24B4A'}],{});
+  makeChart('c2','line',['1월','2월','3월','4월','5월'],[{label:'달성률',data:[72,78,75,83,88],borderColor:'#185FA5',backgroundColor:'rgba(55,138,221,0.08)',fill:true,tension:.4,pointBackgroundColor:'#185FA5',pointRadius:3},{label:'목표',data:[80,80,80,85,85],borderColor:'#B4B2A9',borderDash:[4,3],pointRadius:0}],{y:{min:60,max:100,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.04)'}}});
+  const members=[{n:'이민준',p:92,c:'#378ADD'},{n:'박현수',p:78,c:'#1D9E75'},{n:'최서연',p:54,c:'#EF9F27'},{n:'정유진',p:88,c:'#185FA5'},{n:'한도훈',p:71,c:'#0F6E56'}];
+  const tr=document.getElementById('teamRows');if(tr){tr.innerHTML='';members.forEach(m=>{tr.innerHTML+=`<div class="mrow"><div class="av" style="width:18px;height:18px;font-size:8px;background:#E6F1FB;color:#185FA5">${m.n[0]}${m.n[1]}</div><span style="font-size:10px;color:var(--color-text-primary);flex:1">${m.n}</span><div class="mbar"><div class="mfill" style="width:${m.p}%;background:${m.c}"></div></div><span class="mpct">${m.p}%</span></div>`;});}
+}
+function initAnalytics(){
+  makeChart('c3','line',['1월','2월','3월','4월','5월','6월(예)','7월(예)','8월(예)','9월(예)','10월(예)','11월(예)','12월(목)'],[{label:'달성률',data:[72,78,75,83,88,null,null,null,null,null,null,null],borderColor:'#185FA5',tension:.4,pointRadius:3,pointBackgroundColor:'#185FA5'},{label:'목표',data:[80,80,80,85,85,85,90,90,90,90,90,90],borderColor:'#B4B2A9',borderDash:[3,3],pointRadius:0}],{x:{ticks:{font:{size:8},maxRotation:30}}});
+  makeChart('c4','bar',['Q1','Q2','Q3(예)','Q4(목)'],[{data:[78,65,0,0],backgroundColor:['#378ADD','#EF9F27','#D3D1C7','#D3D1C7'],borderRadius:4}],{y:{max:100,ticks:{font:{size:9},callback:v=>v+'%'}}});
+}
+function initKPI(){
+  makeChart('c5','line',['1월','2월','3월','4월','5월'],[{label:'달성률',data:[72,78,75,83,88],borderColor:'#185FA5',backgroundColor:'rgba(55,138,221,0.1)',fill:true,tension:.4,pointBackgroundColor:'#185FA5',pointRadius:4},{label:'목표',data:[80,80,80,85,85],borderColor:'#E24B4A',borderDash:[4,3],pointRadius:0}],{y:{min:60,max:100,ticks:{callback:v=>v+'%',font:{size:9}}}});
+}
+const allTasks=[
+  {title:'클라이언트 보고서 수정',status:'진행중',priority:'긴급',assignee:'이민준',due:'오늘'},
+  {title:'서버 배포 승인',status:'대기',priority:'긴급',assignee:'박현수',due:'내일'},
+  {title:'Q2 마케팅 전략 검토',status:'지연',priority:'중요',assignee:'최서연',due:'5/24'},
+  {title:'신규 팀원 온보딩',status:'대기',priority:'중요',assignee:'김지훈',due:'5/29'},
+  {title:'주간 회의록 정리',status:'완료',priority:'일반',assignee:'정유진',due:'5/23'},
+  {title:'UI 디자인 검토',status:'완료',priority:'일반',assignee:'한도훈',due:'5/22'},
+  {title:'API 연동 테스트',status:'진행중',priority:'중요',assignee:'박현수',due:'5/27'},
+  {title:'대시보드 UI 개선',status:'진행중',priority:'일반',assignee:'한도훈',due:'5/28'},
+  {title:'월간 보고서 작성',status:'진행중',priority:'중요',assignee:'정유진',due:'5/30'},
+  {title:'마케팅 캠페인 기획',status:'지연',priority:'긴급',assignee:'최서연',due:'5/24'},
+  {title:'DB 마이그레이션',status:'완료',priority:'중요',assignee:'이민준',due:'5/21'},
+  {title:'버그 수정 #423',status:'진행중',priority:'긴급',assignee:'이민준',due:'오늘'},
+];
+const statCls={진행중:'sp',완료:'sd',대기:'sw',지연:'sl'};
+const priorCls={긴급:'bu',중요:'bi',일반:'bn'};
+function filterTasks(){
+  const sf=document.getElementById('taskFilter').value;
+  const pf=document.getElementById('priorFilter').value;
+  const list=document.getElementById('taskList');
+  if(!list)return;
+  list.innerHTML='';
+  allTasks.filter(t=>(sf==='all'||t.status===sf)&&(pf==='all'||t.priority===pf)).forEach(t=>{
+    list.innerHTML+=`<div class="titem"><div class="ttop"><span class="ttit" style="font-size:11px">${t.title}</span><span class="tstat ${statCls[t.status]}">${t.status}</span><span class="pbadge ${priorCls[t.priority]}" style="margin-left:4px">${t.priority}</span></div><div class="tmeta" style="font-size:10px"><span><i class="ti ti-user" style="font-size:9px"></i> ${t.assignee}</span><span><i class="ti ti-calendar" style="font-size:9px"></i> ${t.due}</span></div></div>`;
+  });
+}
+function buildCal(){
+  const days=['일','월','화','수','목','금','토'];
+  const head=document.getElementById('calHead');
+  const daysEl=document.getElementById('calDays');
+  if(!head||!daysEl)return;
+  head.innerHTML=days.map(d=>`<div class="cal-head">${d}</div>`).join('');
+  const events=[26,27,28,29,30,31];
+  let html='';
+  for(let i=0;i<3;i++) html+=`<div class="cal-day other">${25+i}</div>`;
+  for(let d=1;d<=31;d++){
+    const isToday=d===26;
+    const hasEv=events.includes(d);
+    html+=`<div class="cal-day${isToday?' today':''}${hasEv&&!isToday?' has-event':''}">${d}</div>`;
+  }
+  for(let i=1;i<=4;i++) html+=`<div class="cal-day other">${i}</div>`;
+  daysEl.innerHTML=html;
+}
+function buildMembers(){
+  const mg=document.getElementById('memberGrid');
+  if(!mg)return;
+  const ms=[
+    {init:'KJ',name:'김지훈',role:'팀장 · 관리자',tasks:12,done:11,bg:'#E6F1FB',fg:'#185FA5'},
+    {init:'LM',name:'이민준',role:'개발 · 시니어',tasks:22,done:20,bg:'#EAF3DE',fg:'#0F6E56'},
+    {init:'PH',name:'박현수',role:'개발 · 미들',tasks:17,done:13,bg:'#FBEAF0',fg:'#72243E'},
+    {init:'CS',name:'최서연',role:'마케팅 · 시니어',tasks:16,done:8,bg:'#FAEEDA',fg:'#633806'},
+    {init:'JY',name:'정유진',role:'기획 · 미들',tasks:18,done:16,bg:'#E6F1FB',fg:'#0C447C'},
+    {init:'HD',name:'한도훈',role:'디자인 · 시니어',tasks:15,done:11,bg:'#F1EFE8',fg:'#444441'},
+    {init:'OT',name:'오태현',role:'개발 · 주니어',tasks:10,done:6,bg:'#EEEDFE',fg:'#3C3489'},
+    {init:'SK',name:'신경민',role:'QA · 미들',tasks:14,done:10,bg:'#E1F5EE',fg:'#085041'},
+  ];
+  mg.innerHTML=ms.map(m=>`<div class="member-card"><div class="av" style="width:34px;height:34px;font-size:11px;background:${m.bg};color:${m.fg};flex-shrink:0">${m.init}</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">${m.name}</div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">${m.role}</div><div class="mbar"><div class="mfill" style="width:${Math.round(m.done/m.tasks*100)}%;background:${m.fg}"></div></div><div style="font-size:9px;color:var(--color-text-secondary);margin-top:2px">${m.done}/${m.tasks} 완료 (${Math.round(m.done/m.tasks*100)}%)</div></div></div>`).join('');
+}
+const memoData=[
+  {color:'my',cls:'my',text:'클라이언트 미팅 오후 3시 — 발표자료 최종 확인 필수.'},
+  {color:'mg',cls:'mg',text:'Sprint 23 완료. 다음 주 Sprint 24 킥오프 준비.'},
+  {color:'mb',cls:'mb',text:'AI 자동화 파이프라인 제안 — 팀장 검토 요청.'},
+  {color:'mp',cls:'mp',text:'마케팅 지연 3건 — 담당자 확인 필요.'},
+  {color:'my',cls:'my',text:'6월 채용 면접 일정 조율 필요. HR팀 연락.'},
+  {color:'mg',cls:'mg',text:'Q2 목표 재설정 회의 — 5/28 오전 10시.'},
+];
+function buildMemo(){
+  const mg=document.getElementById('memoGrid');
+  if(!mg)return;
+  mg.innerHTML=memoData.map((m,i)=>`<div class="memo ${m.cls}" style="min-height:70px;position:relative"><div style="font-size:9px;margin-bottom:4px;opacity:.7">메모 #${i+1}</div>${m.text}<div style="position:absolute;bottom:6px;right:8px;font-size:9px;opacity:.5;cursor:pointer" onclick="deleteMemo(${i})"><i class="ti ti-x"></i></div></div>`).join('');
+}
+function addMemo(){
+  const colors=['my','mg','mb','mp'];
+  memoData.push({cls:colors[Math.floor(Math.random()*4)],text:'새 메모를 클릭하여 편집하세요.'});
+  buildMemo();
+}
+function deleteMemo(i){memoData.splice(i,1);buildMemo();}
+const fullMsgs=[
+  {init:'LM',bg:'#E6F1FB',fg:'#185FA5',text:'오늘 배포 일정 오후 4시 맞죠?',time:'09:14',mine:false},
+  {init:'KJ',bg:'#EAF3DE',fg:'#0F6E56',text:'네, 4시 확정입니다. 테스트 먼저 확인 부탁해요.',time:'09:16',mine:true},
+  {init:'PH',bg:'#FBEAF0',fg:'#72243E',text:'마케팅 보고서 초안 공유했어요. 검토 부탁드립니다.',time:'09:31',mine:false},
+  {init:'CS',bg:'#FAEEDA',fg:'#633806',text:'Q2 KPI 목표치 재조정이 필요할 것 같습니다.',time:'09:45',mine:false},
+  {init:'KJ',bg:'#EAF3DE',fg:'#0F6E56',text:'내일 오전 회의에서 논의하죠. 모두 참석 가능하죠?',time:'09:47',mine:true},
+  {init:'JY',bg:'#E6F1FB',fg:'#0C447C',text:'네 참석합니다! 자료 준비해올게요.',time:'09:50',mine:false},
+];
+function buildFullChat(){
+  const el=document.getElementById('chatFull');
+  if(!el)return;
+  el.innerHTML=fullMsgs.map(m=>`<div class="cmsg" style="${m.mine?'flex-direction:row-reverse':''};margin-bottom:12px;display:flex;gap:8px"><div class="cav" style="background:${m.bg};color:${m.fg};width:28px;height:28px;border-radius:50%;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">${m.init}</div><div style="${m.mine?'text-align:right':''}"><div class="cbub${m.mine?' mine':''}">${m.text}</div><div class="ctime">${m.time}</div></div></div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+function sendFullChat(){
+  const inp=document.getElementById('chatFullInput');
+  const val=inp.value.trim();if(!val)return;
+  fullMsgs.push({init:'KJ',bg:'#EAF3DE',fg:'#0F6E56',text:val,time:'방금',mine:true});
+  buildFullChat();inp.value='';
+}
+function sendRChat(){
+  const inp=document.getElementById('rChatIn');
+  const val=inp.value.trim();if(!val)return;
+  const c=document.getElementById('rChatMsgs');
+  if(c){c.innerHTML+=`<div class="cmsg" style="flex-direction:row-reverse;margin-bottom:10px;display:flex;gap:7px"><div class="cav" style="background:#EAF3DE;color:#0F6E56;width:24px;height:24px;border-radius:50%;font-size:9px;font-weight:500;display:flex;align-items:center;justify-content:center">KJ</div><div style="text-align:right"><div class="cbub mine">${val}</div><div class="ctime">방금</div></div></div>`;}
+  inp.value='';
+}
+function clearEmail(){['emailTo','emailSubj','emailBody'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});document.getElementById('emailMsg').textContent='';}
+function sendEmail(){
+  const to=document.getElementById('emailTo').value.trim();
+  const subj=document.getElementById('emailSubj').value.trim();
+  if(!to||!subj){document.getElementById('emailMsg').style.color='#E24B4A';document.getElementById('emailMsg').textContent='받는 사람과 제목을 입력하세요.';return;}
+  document.getElementById('emailMsg').style.color='#1D9E75';
+  document.getElementById('emailMsg').textContent='이메일이 성공적으로 발송되었습니다!';
+  setTimeout(()=>{clearEmail();},1500);
+}
+function saveSettings(){const el=document.getElementById('settingsMsg');el.textContent='설정이 저장되었습니다.';setTimeout(()=>{el.textContent=''},2000);}
+function addTask(){
+  const title=prompt('업무 제목을 입력하세요:');
+  if(title){allTasks.unshift({title,status:'대기',priority:'일반',assignee:'미배정',due:'미정'});alert('업무가 추가되었습니다!');}
+}
+function refreshPage(){const t=document.getElementById('pageTitle');const orig=t.textContent;t.textContent='새로고침 중...';setTimeout(()=>{t.textContent=orig},600);}
+initDashboard();
+filterTasks();
+</script>
